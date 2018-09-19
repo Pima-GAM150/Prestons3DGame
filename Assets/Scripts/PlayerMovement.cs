@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour {
     public new Transform transform;
     public float jumpPower;
     public float speed;
+    public float horizSpeed;
     public float maxSpeed;
 
 	// Use this for initialization
@@ -20,7 +21,7 @@ public class PlayerMovement : MonoBehaviour {
         Debug.Log("Horizontal is at " + Input.GetAxis("Horizontal"));
         if(Input.GetAxis("Horizontal") != 0)
         {
-            transform.position = new Vector3((transform.position.x + (Input.GetAxis("Horizontal") * speed * Time.deltaTime)), transform.position.y, transform.position.z);
+            transform.position = new Vector3((transform.position.x + (Input.GetAxis("Horizontal") * horizSpeed * Time.deltaTime)), transform.position.y, transform.position.z);
         }
 
         
