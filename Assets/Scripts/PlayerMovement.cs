@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    public Transform transform;
+    public new Transform transform;
     public float jumpPower;
     public float speed;
     public float maxSpeed;
@@ -16,16 +16,37 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        GoForward();    
+        GoForward();
+        Debug.Log("Horizontal is at " + Input.GetAxis("Horizontal"));
+        if(Input.GetAxis("Horizontal") != 0)
+        {
+            transform.position = new Vector3((transform.position.x + (Input.GetAxis("Horizontal") * speed * Time.deltaTime)), transform.position.y, transform.position.z);
+        }
+
+        
 	}
 
     void GoForward ()
     {
-        transform.position = new Vector3((transform.position.x + (speed * Time.deltaTime)), transform.position.y);
+        transform.position = new Vector3(transform.position.x, transform.position.y, (transform.position.z + (speed * Time.deltaTime)));
 
         if (speed <= maxSpeed){
             speed += Time.deltaTime; 
            }
     }
 
+    void MoveHorizontal()
+    {
+        
+    }
+
+    void Jump(float x)
+    {
+
+    }
+
+    void Crashed()
+    {
+
+    }
 }
