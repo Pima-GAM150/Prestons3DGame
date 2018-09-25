@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour {
     void Update () {
         GoForward();
         Debug.Log("Jump is " + Input.GetButtonDown("Jump"));
-        if (Input.GetButtonDown("Jump") == true && isGrounded)
+        if (Input.GetButtonDown("Jump") == true && isGrounded == true)
         {
             Jump(rb, jump, jumpPower);
         }
@@ -76,6 +76,6 @@ public class PlayerMovement : MonoBehaviour {
 
     void Crashed()
     {
-
+        speed = 0f;
     }
 }
