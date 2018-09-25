@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private Vector3 jump = new Vector3(0f, 2f, 0f);
     private bool isGrounded;
+    public bool crashed = false;
 
     void Start()
     {
@@ -21,20 +22,22 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
-        GoForward();
-        Debug.Log("Jump is " + Input.GetButtonDown("Jump"));
-        if (Input.GetButtonDown("Jump") == true && isGrounded == true)
-        {
-            Jump(rb, jump, jumpPower);
-        }
-        if(Input.GetAxis("Horizontal") != 0)
-        {
-            transform.position = new Vector3((transform.position.x + (Input.GetAxis("Horizontal") * horizSpeed * Time.deltaTime)), transform.position.y, transform.position.z);
-        }
+    void Update()
+    {
 
-        
-	}
+        if (crashed == false) { 
+            Debug.Log("Jump is " + Input.GetButtonDown("Jump"));
+            if (Input.GetButtonDown("Jump") == true && isGrounded == true)
+            {
+                rb.AddForce(jump, ForceMode.Impulse);
+            }
+            if (Input.GetAxis("Horizontal") != 0)
+            {
+                transform.position = new Vector3((transform.position.x + (Input.GetAxis("Horizontal") * horizSpeed * Time.deltaTime)), transform.position.y, transform.position.z);
+            }
+            GoForward();
+        }
+    }
 
     void GoForward ()
     {
@@ -45,20 +48,15 @@ public class PlayerMovement : MonoBehaviour {
            }
     }
 
-    void Jump(Rigidbody rb, Vector3 direction, float x)
-    {
-        rb.AddForce(direction * jumpPower, ForceMode.Impulse);
-    }
-
     //This function updates the isGrounded variable when the player lands after a jump.
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "ground")
+        if(collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
         }
 
-        if(collision.gameObject.tag == "obstacle")
+        if(collision.gameObject.tag == "Obstacle")
         {
             Crashed();
         }
@@ -68,7 +66,7 @@ public class PlayerMovement : MonoBehaviour {
     //not allowing for another jump.
     private void OnCollisionExit(Collision collision)
     {
-        if(collision.gameObject.tag == "ground")
+        if(collision.gameObject.tag == "Ground")
         {
             isGrounded = false;
         }
@@ -77,5 +75,6 @@ public class PlayerMovement : MonoBehaviour {
     void Crashed()
     {
         speed = 0f;
+        crashed = true;
     }
 }
