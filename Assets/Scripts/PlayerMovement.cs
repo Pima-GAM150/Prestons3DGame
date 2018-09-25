@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour {
             Debug.Log("Jump is " + Input.GetButtonDown("Jump"));
             if (Input.GetButtonDown("Jump") == true && isGrounded == true)
             {
-                rb.AddForce(jump, ForceMode.Impulse);
+                rb.AddForce(jump * jumpPower, ForceMode.Impulse);
             }
             if (Input.GetAxis("Horizontal") != 0)
             {
